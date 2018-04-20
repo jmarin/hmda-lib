@@ -5,12 +5,24 @@ extern crate num_cpus;
 extern crate tokio_core;
 
 use std::str;
+use std::env;
 use self::tokio_core::reactor::Core;
 use self::hyper::Client;
 use self::hyper_tls::HttpsConnector;
 use self::futures::future::Future;
 use self::futures::Stream;
-use model::http::service_status::ServiceStatus;
+
+pub fn get_url() -> String {
+    let url = env::var("HMDA_URL");
+
+    match url {
+        Ok(h) => h,
+        Err(_) => {
+            println!("HMDA_URL environment variable not found, using default instead");
+            String::from("https://ffiec-api.cfpb.gov/public/")
+        }
+    }
+}
 
 pub fn get_json(url: &String) -> String {
     let mut core = Core::new().unwrap();
