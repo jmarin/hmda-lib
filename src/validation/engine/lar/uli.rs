@@ -6,14 +6,14 @@ fn calculate_mod(i: u64) -> u64 {
     i % 97
 }
 
-#[cfg(test)]
-mod tests {
-
-    use super::*;
-
-    #[test]
-    fn test_calculate_mod() {
-        assert_eq!(calculate_mod(100), 3);
-    }
-
-}
+//#[cfg(test)]
+//mod tests {
+//
+//    use super::*;
+//
+//    #[test]
+//    fn test_calculate_mod() {
+//        assert_eq!(calculate_mod(100), 3);
+//    }
+//
+//}
