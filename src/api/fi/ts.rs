@@ -18,7 +18,6 @@ pub fn ts_parse(verify_ts: &VerifyTs) -> TransmittalSheet {
 mod tests {
     use super::*;
 
-    use api::util::get_url;
     use model::fi::ts::transmittal_sheet::TransmittalSheet;
     use model::http::parse_and_validate::VerifyTs;
 

@@ -10,6 +10,10 @@ use api::util::{get_json, get_url};
 
 pub fn hmda_api_status() -> Result<ServiceStatus, String> {
     let url = get_url();
+    hmda_api_status_url(&url)
+}
+
+pub fn hmda_api_status_url(url: &String) -> Result<ServiceStatus, String> {
     let s = get_json(&url);
     let status: ServiceStatus = serde_json::from_str(&s).unwrap();
     Ok(status)
