@@ -6,7 +6,7 @@ extern crate serde_json;
 extern crate tokio_core;
 
 use model::http::service_status::ServiceStatus;
-use model::http::util::get_json;
+use api::util::get_json;
 
 pub fn hmda_api_status(url: &String) -> Result<ServiceStatus, String> {
     let s = get_json(url);
@@ -17,11 +17,10 @@ pub fn hmda_api_status(url: &String) -> Result<ServiceStatus, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use model::http::util::get_url;
+    use api::util::get_url;
 
     #[test]
     fn test_hmda_api_status() {
-        //let host = String::from("https://ffiec-api.cfpb.gov/public/");
         let host = get_url();
         let status = hmda_api_status(&host).unwrap();
         println!("{:?}", status);
