@@ -36,6 +36,6 @@ mod tests {
         let status = hmda_api_status(&host).unwrap();
         println!("{:?}", status);
         assert_eq!("OK", status.status);
-        //assert_eq!(hmda_api_status(host).unwrap(), expected_status);
+        assert_eq!("hmda-public-api", status.service);
     }
 }
