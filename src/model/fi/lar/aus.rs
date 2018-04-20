@@ -1,11 +1,14 @@
 use std::fmt;
 
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct AutomatedUnderwritingSystem {
     pub aus1: i8,
     pub aus2: i8,
     pub aus3: i8,
     pub aus4: i8,
     pub aus5: i8,
+    #[serde(rename = "otherAUS")]
     pub other_aus: String,
 }
 

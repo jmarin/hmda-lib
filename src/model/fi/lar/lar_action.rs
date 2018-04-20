@@ -1,3 +1,5 @@
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct LarAction {
     pub preapproval: i8,
     pub action_taken_type: i8,

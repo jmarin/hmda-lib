@@ -1,3 +1,5 @@
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct LoanDisclosure {
     pub total_loan_costs: String,
     pub total_points_and_fees: String,

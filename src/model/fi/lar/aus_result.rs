@@ -1,5 +1,7 @@
 use std::fmt;
 
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct AutomatedUnderwritingSystemResult {
     pub aus_result1: i8,
     pub aus_result2: i8,

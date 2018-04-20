@@ -1,6 +1,10 @@
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct LarIdentifier {
     pub id: u8,
+    #[serde(rename = "LEI")]
     pub lei: String,
+    #[serde(rename = "NMLSRIdentifier")]
     pub nmls_identifier: String,
 }
 

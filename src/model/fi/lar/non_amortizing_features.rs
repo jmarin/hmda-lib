@@ -1,3 +1,5 @@
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct NonAmortizingFeatures {
     pub balloon_payment: i8,
     pub interest_only_payment: i8,

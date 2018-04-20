@@ -1,3 +1,5 @@
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct Denial {
     pub denial_reason_1: i8,
     pub denial_reason_2: i8,

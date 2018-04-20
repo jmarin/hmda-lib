@@ -1,4 +1,7 @@
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct Loan {
+    #[serde(rename = "ULI")]
     pub uli: String,
     pub application_date: String,
     pub loan_type: i8,

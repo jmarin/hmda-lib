@@ -11,10 +11,12 @@ use model::fi::lar::property::Property;
 use model::fi::lar::aus::AutomatedUnderwritingSystem;
 use model::fi::lar::aus_result::AutomatedUnderwritingSystemResult;
 
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct LoanApplicationRegister {
     pub lar_identifier: LarIdentifier,
     pub loan: Loan,
-    pub action: LarAction,
+    pub lar_action: LarAction,
     pub geography: Geography,
     pub applicant: Applicant,
     pub co_applicant: Applicant,
@@ -28,6 +30,7 @@ pub struct LoanApplicationRegister {
     pub property: Property,
     pub application_submission: i8,
     pub payable_to_institution: i8,
+    #[serde(rename = "AUS")]
     pub aus: AutomatedUnderwritingSystem,
     pub aus_result: AutomatedUnderwritingSystemResult,
     pub reverse_mortgage: i8,
@@ -40,7 +43,7 @@ impl LoanApplicationRegister {
         LoanApplicationRegister {
             lar_identifier: LarIdentifier::sample_lar_identifier(),
             loan: Loan::sample_loan(),
-            action: LarAction::sample_lar_action(),
+            lar_action: LarAction::sample_lar_action(),
             geography: Geography::sample_geography(),
             applicant: Applicant::sample_applicant(),
             co_applicant: Applicant::sample_applicant(),
@@ -53,7 +56,7 @@ impl LoanApplicationRegister {
             non_amortizing_features: NonAmortizingFeatures::sample_non_amortizing_features(),
             property: Property::sample_property(),
             application_submission: 1,
-            payable_to_institution: 1,
+            payable_to_institution: 2,
             aus: AutomatedUnderwritingSystem::sample_aus(),
             aus_result: AutomatedUnderwritingSystemResult::sample_aus_result(),
             reverse_mortgage: 1,
@@ -74,12 +77,12 @@ impl fmt::Display for LoanApplicationRegister {
             self.loan.application_date,
             self.loan.loan_type,
             self.loan.loan_purpose,
-            self.action.preapproval,
+            self.lar_action.preapproval,
             self.loan.construction_method,
             self.loan.occupancy,
             self.loan.amount,
-            self.action.action_taken_type,
-            self.action.action_taken_date,
+            self.lar_action.action_taken_type,
+            self.lar_action.action_taken_date,
             self.geography.street,
             self.geography.city,
             self.geography.state,
@@ -91,13 +94,13 @@ impl fmt::Display for LoanApplicationRegister {
             self.applicant.ethnicity.ethnicity3,
             self.applicant.ethnicity.ethnicity4,
             self.applicant.ethnicity.ethnicity5,
-            self.applicant.ethnicity.other_hispanic_latino,
+            self.applicant.ethnicity.other_hispanic_or_latino,
             self.co_applicant.ethnicity.ethnicity1,
             self.co_applicant.ethnicity.ethnicity2,
             self.co_applicant.ethnicity.ethnicity3,
             self.co_applicant.ethnicity.ethnicity4,
             self.co_applicant.ethnicity.ethnicity5,
-            self.co_applicant.ethnicity.other_hispanic_latino,
+            self.co_applicant.ethnicity.other_hispanic_or_latino,
             self.applicant.ethnicity.ethnicity_observed,
             self.co_applicant.ethnicity.ethnicity_observed,
             self.applicant.race.race1,
@@ -105,17 +108,17 @@ impl fmt::Display for LoanApplicationRegister {
             self.applicant.race.race3,
             self.applicant.race.race4,
             self.applicant.race.race5,
-            self.applicant.race.other_native,
-            self.applicant.race.other_asian,
-            self.applicant.race.other_pacific_islander,
+            self.applicant.race.other_native_race,
+            self.applicant.race.other_asian_race,
+            self.applicant.race.other_pacific_islander_race,
             self.co_applicant.race.race1,
             self.co_applicant.race.race2,
             self.co_applicant.race.race3,
             self.co_applicant.race.race4,
             self.co_applicant.race.race5,
-            self.co_applicant.race.other_native,
-            self.co_applicant.race.other_asian,
-            self.co_applicant.race.other_pacific_islander,
+            self.co_applicant.race.other_native_race,
+            self.co_applicant.race.other_asian_race,
+            self.co_applicant.race.other_pacific_islander_race,
             self.applicant.race.race_observed,
             self.co_applicant.race.race_observed,
             self.applicant.sex.sex,
@@ -159,7 +162,7 @@ impl fmt::Display for LoanApplicationRegister {
             self.property.manufactured_home_secured_property,
             self.property.manufactured_home_land_property_interest,
             self.property.total_units,
-            self.property.multifamily_affordable_units,
+            self.property.multi_family_affordable_units,
             self.application_submission,
             self.payable_to_institution,
             self.lar_identifier.nmls_identifier,
@@ -194,7 +197,7 @@ mod tests {
 
         assert_eq!(
             lar.to_string(),
-                "2|10Bx939c5543TqA1144M|10Bx939c5543TqA1144M999143X38|20180721|1|1|1|1|1|110500|1|20180721|123 Main St|Beverly Hills|CA|90210|06037|06037264000|1|1|1|1|1||1|1|1|1|1||3|3|5|7|7|7|7||||5|7|7|7|7||||3|3|1|1|3|3|30|30|36|1|0.428|1|1|750|750|1|9|1|9|10|10|10|10||2399.04|NA|NA|NA|NA|4.125|NA|42.95|80.05|360|NA|1|2|1|1|350500|1|1|5|NA|1|1|12345|1|1|1|1|1||1|1|1|1|1||1|1|1"
+                "2|10Bx939c5543TqA1144M|10Bx939c5543TqA1144M999143X38|20180721|1|1|1|1|1|110500|1|20180721|123 Main St|Beverly Hills|CA|90210|06037|06037264000|1|1|1|1|1||1|1|1|1|1||3|3|5|7|7|7|7||||5|7|7|7|7||||3|3|1|1|3|3|30|30|36|1|0.428|1|1|750|750|1|Other credit score model|1|Other credit score model|10|10|10|10||2399.04|NA|NA|NA|NA|4.125|NA|42.95|80.05|360|NA|1|2|1|1|350500.0|1|1|5|NA|1|2|12345|1|1|1|1|1||1|1|1|1|1||1|1|1"
                 )
     }
 

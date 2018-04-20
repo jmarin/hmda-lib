@@ -1,3 +1,5 @@
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct Sex {
     pub sex: u8,
     pub sex_observed: u8,
