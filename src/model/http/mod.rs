@@ -5,3 +5,4 @@ extern crate serde_json;
 extern crate tokio_core;
 
 pub mod service_status;
+pub mod parse_and_validate;
