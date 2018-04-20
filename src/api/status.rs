@@ -6,10 +6,11 @@ extern crate serde_json;
 extern crate tokio_core;
 
 use model::http::service_status::ServiceStatus;
-use api::util::get_json;
+use api::util::{get_json, get_url};
 
-pub fn hmda_api_status(url: &String) -> Result<ServiceStatus, String> {
-    let s = get_json(url);
+pub fn hmda_api_status() -> Result<ServiceStatus, String> {
+    let url = get_url();
+    let s = get_json(&url);
     let status: ServiceStatus = serde_json::from_str(&s).unwrap();
     Ok(status)
 }
@@ -17,12 +18,10 @@ pub fn hmda_api_status(url: &String) -> Result<ServiceStatus, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use api::util::get_url;
 
     #[test]
     fn test_hmda_api_status() {
-        let host = get_url();
-        let status = hmda_api_status(&host).unwrap();
+        let status = hmda_api_status().unwrap();
         println!("{:?}", status);
         assert_eq!("OK", status.status);
         assert_eq!("hmda-public-api", status.service);

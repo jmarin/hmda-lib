@@ -1,6 +1,7 @@
 use std::fmt;
 use model::fi::ts::address::Address;
 
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub struct Contact {
     pub name: String,
     pub phone: String,

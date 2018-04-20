@@ -1,5 +1,7 @@
 use std::fmt;
 
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct Address {
     pub street: String,
     pub city: String,
