@@ -8,8 +8,12 @@ use api::util::{get_url, post_json};
 pub fn ts_parse(verify_ts: &VerifyTs) -> TransmittalSheet {
     let root_url = get_url();
     let url = root_url + "ts/parse";
+    ts_parse_url(&url, verify_ts)
+}
+
+pub fn ts_parse_url(url: &String, verify_ts: &VerifyTs) -> TransmittalSheet {
     let json = serde_json::to_string(&verify_ts).unwrap();
-    let ts = post_json(&url, json);
+    let ts = post_json(url, json);
     let deserialized: TransmittalSheet = serde_json::from_str(&ts).unwrap();
     deserialized
 }

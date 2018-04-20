@@ -8,8 +8,12 @@ use api::util::{get_url, post_json};
 pub fn lar_parse(verify_lar: &VerifyLar) -> LoanApplicationRegister {
     let root_url = get_url();
     let url = root_url + "lar/parse";
+    lar_parse_url(&url, verify_lar)
+}
+
+pub fn lar_parse_url(url: &String, verify_lar: &VerifyLar) -> LoanApplicationRegister {
     let json = serde_json::to_string(&verify_lar).unwrap();
-    let lar = post_json(&url, json);
+    let lar = post_json(url, json);
     let deserialized: LoanApplicationRegister = serde_json::from_str(&lar).unwrap();
     deserialized
 }
