@@ -2,5 +2,4 @@
 extern crate serde_derive;
 
 pub mod model;
-pub mod validation;
 pub mod api;
