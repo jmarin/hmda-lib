@@ -12,29 +12,10 @@ use self::hyper_tls::HttpsConnector;
 use self::futures::future::Future;
 use self::futures::Stream;
 use model::http::service_status::ServiceStatus;
+use model::http::util::get_json;
 
-pub fn hmda_api_status(url: &str) -> Result<ServiceStatus, String> {
-    let mut core = Core::new().unwrap();
-    let handle = core.handle();
-    let num_cpus = num_cpus::get();
-
-    let client = Client::configure()
-        .connector(HttpsConnector::new(num_cpus, &handle).unwrap())
-        .build(&handle);
-
-    let mut s = String::new();
-    let uri = url.parse().unwrap();
-
-    {
-        let work = client.get(uri).and_then(|res| {
-            res.body().for_each(|chunk| {
-                s.push_str(str::from_utf8(&*chunk).unwrap());
-                futures::future::ok(())
-            })
-        });
-        core.run(work).unwrap();
-    }
-
+pub fn hmda_api_status(url: &String) -> Result<ServiceStatus, String> {
+    let s = get_json(url);
     let status: ServiceStatus = serde_json::from_str(&s).unwrap();
     Ok(status)
 }
@@ -45,7 +26,7 @@ mod tests {
 
     #[test]
     fn test_hmda_api_status() {
-        let host = "https://ffiec-api.cfpb.gov/public/";
+        let host = String::from("https://ffiec-api.cfpb.gov/public/");
         let expected_status = ServiceStatus {
             status: String::from("OK"),
             service: String::from("service"),
